@@ -1,0 +1,69 @@
+html, body { height: 100px; font-family: Georgia, serif; }
+
+p { margin: 18px 0px; }
+
+.wrapper { padding: 20px; text-align: center; -webkit-transition: all 1s linear; }
+
+.npbox {
+    background: #333;
+    width: 300px;
+    padding: 20px;
+    display: inline-block;
+    box-shadow: 0 0 20px black; 
+    color: #eee;
+    -webkit-transition: all .2s ease-in-out;
+}
+.npbox,
+.npbox a {
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+}
+.npbox a,
+.npbox a:hover {
+    color: #fff;
+}
+
+.npbox p:first-child {
+    margin-bottom: 20px;
+}
+
+.np-track {
+    font-size: 20px;
+}
+
+.np-artists:before {
+    content: 'By';
+    color: #aaa;
+    text-shadow: none;
+}
+
+.coverbox { display: inline-block; position: relative; overflow: hidden; height: 300px; }
+.coverbox img {}
+.coverbox a { display: block; }
+.coverbox p { 
+    text-align: left;
+    padding: 8px;
+    width: 284px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+    opacity: 0;
+    -webkit-transition: all .2s ease-in-out;
+    margin-bottom: -10px;
+}
+/* .coverbox:hover p { opacity: 1; margin-bottom: 0px }*/
+
+.np-info {
+    text-align: left;
+    box-shadow: 1px 1px 20px black; 
+    margin-top: 40px;
+    padding: 20px;
+}
+.infobox {
+    float: right; 
+}
+.clear {
+    clear: both;
+}

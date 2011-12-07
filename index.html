@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="sp://import/css/eve.css">
+    <link rel="stylesheet" href="css/main.css" />
+
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/jquery.tmpl.js"></script>
+    <script src="js/knockout-1.2.1.js"></script>
+    <script type="text/html" id="tplNowPlaying">
+      <p>
+	<span class="np-track">
+	  ${npTrack()}
+	</span>
+	<br />
+	<span class="np-artists">
+          {{each(i, artist) npArtists()}}
+            <a class="np-artist" href="${artist.uri}">${artist.name}</a>{{if npArtists().length != i + 1}},
+	    {{else}}
+	    {{/if}}
+          {{/each}}
+	</span>
+      </p>
+      <div class="coverbox">
+	<a href="${npAlbum().uri}">
+	  <img src="${npCoverURL()}" alt="${npAlbum().name}" />
+	  <p>
+	    <span>${npAlbum().name}</span>
+	  </p>
+	</a>
+      </div>
+    </script>
+  </head>
+  <body onload="sp = getSpotifyApi(1); app = sp.require('artistinfo'); app.init();">
+    <div class="wrapper">
+      <h1 data-bind="text: heading">Initializing...</h1>
+      <div class="npbox" data-bind='template: "tplNowPlaying"'></div>
+      <div class="np-info">
+      <h2 class="wiki-header">Wikipedia</h2>
+	<div class="np-info-inner" data-bind="html: npInfo"></div>
+	<div class="clear"></div>
+      </div>
+    </div>
+  </body>
+</html>

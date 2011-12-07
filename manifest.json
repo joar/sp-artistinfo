@@ -1,0 +1,21 @@
+{
+    "AppName": {
+	"en": "Artist Info"
+    },
+    "SupportedLanguages": [
+	"en"
+    ],
+    "VendorIdentifier": "se.wandborg",
+    "AppDescription": "Test application",
+    "AppIcon": {
+	"18x18": ""
+    },
+    "BundleIdentifier": "songinfo",
+    "BundleType": "Application",
+    "RequiredInterface": 1,
+    "RequiredPermissions": [
+	"http://upload.wikimedia.org/*",
+	"http://*.wikipedia.org/*",
+	"http://i.imgur.com/*"
+    ]
+}
