@@ -14,15 +14,20 @@ var app = {
 	this.viewModel.npArtists(np.track.artists);
 	this.viewModel.npAlbum(np.track.album);
 	this.getWikiPage(np.track.artists[0].name);
+	this.viewModel.npInfoWikiURL(
+	    this.formatWikiPageURL(np.track.artists[0].name));
+    },
+    formatWikiPageURL: function (artist) {
+	return 'http://en.wikipedia.org/wiki/' + escape(artist);
     },
     getWikiPage: function (artist) {
-	//http://en.wikipedia.org/w/api.php?action=parse&section=0&prop=text&page=pizza&format=json
 	console.log('Requesting...');
+	$('.np-info-loading').show();
+	$('.np-info-wrapper').hide();
 	$.getJSON(
-//	    'http://en.wikipedia.org/w/api.php?action=parse&section=0&prop=text&page='
 	    'http://en.wikipedia.org/w/api.php?action=parse&prop=text&page='
 		+ escape(artist)
-		+ '&format=json&callback=?',
+		+ '&format=json&callback=?&redirects',
 	    function (data, status, xhr) {
 		console.log('Got response!');
 		console.log(status, xhr);
@@ -30,12 +35,15 @@ var app = {
 		if ( ! data.error ) {
 		    app.viewModel.npInfo(
 			data.parse.text['*'].replace(/"\/\//g, "\"http://").replace(/href="/g, "rel=\"extern\" href=\"").replace(/href="\/wiki/g, 'href="http://en.wikipedia.org/wiki'));
+		    app.viewModel.npInfoWikiPageTitle(data.parse.title);
 		} else {
 		    app.viewModel.npInfo(
 			'Error: ' + data.error.info);
 		}
+		$('.np-info-loading').hide();
+		$('.np-info-wrapper').show();
 	    });
-    }
+    },
 }
 
 app.viewModel = {
@@ -47,7 +55,9 @@ app.viewModel = {
     }]),
     npAlbum: ko.observable('<album>'),
     npCoverURL: ko.observable(app.defaultAlbumCover),
-    npInfo: ko.observable('')
+    npInfo: ko.observable(''),
+    npInfoWikiURL: ko.observable(''),
+    npInfoWikiPageTitle: ko.observable('')
 };
 
 app.init = function () {

@@ -8,19 +8,19 @@
     <script src="js/jquery.tmpl.js"></script>
     <script src="js/knockout-1.2.1.js"></script>
     <script type="text/html" id="tplNowPlaying">
-      <p>
+      <div>
 	<span class="np-track">
 	  ${npTrack()}
 	</span>
 	<br />
 	<span class="np-artists">
-          {{each(i, artist) npArtists()}}
+          {{each(i, artist) npArtists()}} 
             <a class="np-artist" href="${artist.uri}">${artist.name}</a>{{if npArtists().length != i + 1}},
 	    {{else}}
 	    {{/if}}
           {{/each}}
 	</span>
-      </p>
+      </div>
       <div class="coverbox">
 	<a href="${npAlbum().uri}">
 	  <img src="${npCoverURL()}" alt="${npAlbum().name}" />
@@ -30,16 +30,33 @@
 	</a>
       </div>
     </script>
+    <!-- Template for the info container -->
+    <script type="text/html" id="tplInfo">
+      <div class="np-info">
+	<h2 data-bind="text: npInfoWikiPageTitle" class="wiki-header">Wikipedia</h2>
+	<p>
+	  &mdash; <a data-bind="attr: { href: npInfoWikiURL }">View on Wikipedia</a>
+	</p>
+	<div class="np-info-inner" data-bind="html: npInfo"></div>
+	<div class="clear"></div>
+      </div>
+    </script>
+    <script type="text/html" id="tplInfoError">
+      <p>${npInfoErrorMessage}</p>
+    </script>
+    <script type="text/html" id="tplInfoLoading">
+      <div class="throbber">
+	<span></span>
+      </div>
+    </script>
   </head>
   <body onload="sp = getSpotifyApi(1); app = sp.require('artistinfo'); app.init();">
     <div class="wrapper">
       <h1 data-bind="text: heading">Initializing...</h1>
       <div class="npbox" data-bind='template: "tplNowPlaying"'></div>
-      <div class="np-info">
-      <h2 class="wiki-header">Wikipedia</h2>
-	<div class="np-info-inner" data-bind="html: npInfo"></div>
-	<div class="clear"></div>
-      </div>
+      <div class="np-info-wrapper" data-bind='template: "tplInfo"'></div>
+      <div class="np-info-error" data-bind='template: "tplInfoError"'></div>
+      <div class="np-info-loading" data-bind='template: "tplInfoLoading"'></div>
     </div>
   </body>
 </html>
